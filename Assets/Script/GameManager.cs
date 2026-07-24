@@ -139,189 +139,189 @@ public class GameManager : MonoBehaviour
 
     #region Data Management
 
-    #region Player Data
-    //data path in device directory
-//    private static string playerDataPath;
-//    private PlayerData _playerData = null;
-//    public PlayerData playerData
-//    {
-//        get
-//        {
-//            if (_playerData != null)
-//                return _playerData;
-//            else
-//            {
-//                _playerData = new PlayerData();
-//                LoadPlayerData();
-//                return _playerData;
-//            }
-//        }
+//    #region Player Data
+//    //data path in device directory
+////    private static string playerDataPath;
+////    private PlayerData _playerData = null;
+////    public PlayerData playerData
+////    {
+////        get
+////        {
+////            if (_playerData != null)
+////                return _playerData;
+////            else
+////            {
+////                _playerData = new PlayerData();
+////                LoadPlayerData();
+////                return _playerData;
+////            }
+////        }
 
-//        set
-//        {
-//            _playerData = value;
-//        }
+////        set
+////        {
+////            _playerData = value;
+////        }
+////    }
+
+////    public void LoadPlayerData()
+////    {
+////        if (File.Exists(playerDataPath))
+////        {
+////            //reading json data
+////            string json = File.ReadAllText(playerDataPath);
+////            //converting it to player data
+////            _playerData = JsonUtility.FromJson<PlayerData>(json);
+
+////#if UNITY_EDITOR
+////            Debug.Log("Player Data Loaded");
+////#endif
+////        }
+////        else
+////        {
+////            _playerData = new PlayerData();
+////            SavePlayerData(new PlayerData());
+
+////#if UNITY_EDITOR
+////            Debug.Log("Player Data path not found, creating new player data");
+////#endif
+////        }
+////    }
+
+////    public void SavePlayerData(PlayerData data)
+////    {
+////        //converting player data in json format
+////        string jsonData = JsonUtility.ToJson(data, true);
+////        //saving it to desired path
+////        File.WriteAllText(playerDataPath, jsonData);
+
+////#if UNITY_EDITOR
+////        Debug.Log("Player Data Saved");
+////#endif
+////    }
+//    #endregion
+//    //old cp code used to be here
+//    #region Checkpoint Data
+
+//    [HideInInspector] public int latestCheckPointIndex = 0;
+//    [HideInInspector] public int checkPointPlayerWantsToSpawnIn = 0;
+
+//    ////keeping track of the lastest checkpoint position for quick respawn
+//    //private Vector3 _lastestcheckpointPosition = Vector3.zero;
+//    //public Vector3 lastestcheckpointPosition
+//    //{
+//    //    get
+//    //    {
+//    //        if (_lastestcheckpointPosition == Vector3.zero)
+//    //        {
+//    //            int i = localCheckpointData.checkPointPositions.Count;
+//    //            SerializableVector3 _pos = localCheckpointData.checkPointPositions[i];
+//    //            _lastestcheckpointPosition = _pos.ToVector3();
+//    //        }
+//    //        return _lastestcheckpointPosition;
+//    //    }
+
+//    //    set
+//    //    {
+//    //        _lastestcheckpointPosition = value;
+//    //    }
+//    //}
+
+//    /*this is where we finally make separation between the player data and checkpoint data, so that we can save them separately and load them separately as well.*/
+
+//    /*we bake in the checkpoint data path for each scene, so that we can save and load them separately. further follow the strict rule that the path is determined by the scene index, and the index of the array points to the scene index, thus when using in a particular scene, we use its buildscene index to find the correct path, and must ensure it is consistent to avoid errors*/
+
+//    /*since we cannot run application.persistantpath from data types, and only run it at start/awake so creating a simple private persistentpath variables, initiliazed in the awake function*/
+
+//    //private string _applicationPersistentPath;
+
+//    ////keeping all the required player data paths for different data store needs
+//    //private static string[] checkpointDataPaths = new string[]
+//    //{
+//    //    // _applicationPersistentPath + "/checkpointData_scene0.json",
+//    //    // _applicationPersistentPath + "/checkpointData_scene1.json",
+//    //    // _applicationPersistentPath + "/checkpointData_scene2.json",
+//    //    // _applicationPersistentPath + "/checkpointData_scene3.json"
+
+//    //    //the above data is rewritten from the awake function since u cannot use a string inside a static variable
+//    //};
+
+//    //private save_manager _saveManager; //local reference to the save manager
+//    //public save_manager saveManager
+//    //{
+//    //    get
+//    //    {
+//    //        if (_saveManager)
+//    //            return _saveManager;
+//    //        else
+//    //        {
+//    //            _saveManager = save_manager.Instance;
+//    //            return _saveManager;
+//    //        }
+//    //    }
+
+//    //}
+
+//    //public void SaveCheckpointData(CheckpointData data)
+//    //{
+//    //    string path = checkpointDataPaths[SceneManager.GetActiveScene().buildIndex];
+//    //    saveManager.SavePlayerData(data, path);
+//    //}
+
+//    // public CheckpointData LoadCheckpointData()
+//    // {
+//    //     string path = checkpointDataPath[SceneManager.GetActiveScene().buildIndex];
+
+//    // }
+
+//    //private CheckpointData _localCheckpointData;
+//    //public CheckpointData localCheckpointData
+//    //{
+//    //    get
+//    //    {
+//    //        if (_localCheckpointData == null)
+//    //        {
+//    //            //load check point data
+//    //            string _path = checkpointDataPaths[SceneManager.GetActiveScene().buildIndex];
+
+//    //            _localCheckpointData = saveManager.LoadPlayerData<CheckpointData>(_path);
+//    //        }
+//    //        return _localCheckpointData;
+//    //    }
+//    //}
+//    //#endregion
+//    #endregion
+
+//    #region Unity logic
+
+//    private void OnEnable()
+//    {
+//        SceneManager.activeSceneChanged += OnSceneChanged; ;
 //    }
 
-//    public void LoadPlayerData()
+//    private void OnDisable()
 //    {
-//        if (File.Exists(playerDataPath))
-//        {
-//            //reading json data
-//            string json = File.ReadAllText(playerDataPath);
-//            //converting it to player data
-//            _playerData = JsonUtility.FromJson<PlayerData>(json);
-
-//#if UNITY_EDITOR
-//            Debug.Log("Player Data Loaded");
-//#endif
-//        }
-//        else
-//        {
-//            _playerData = new PlayerData();
-//            SavePlayerData(new PlayerData());
-
-//#if UNITY_EDITOR
-//            Debug.Log("Player Data path not found, creating new player data");
-//#endif
-//        }
+//        SceneManager.activeSceneChanged -= OnSceneChanged;
 //    }
 
-//    public void SavePlayerData(PlayerData data)
+//    private void OnApplicationQuit()
 //    {
-//        //converting player data in json format
-//        string jsonData = JsonUtility.ToJson(data, true);
-//        //saving it to desired path
-//        File.WriteAllText(playerDataPath, jsonData);
+//        //Saving player data and checkpoint data
+//        // SavePlayerData(playerData);
+//        // SaveCPData(checkpointData);
 
-//#if UNITY_EDITOR
-//        Debug.Log("Player Data Saved");
-//#endif
+//        //Clearing Notification Manager list
+//        NotificationManager.Instance.RemoveAll();
 //    }
-    #endregion
-    //old cp code used to be here
-    #region Checkpoint Data
 
-    [HideInInspector] public int latestCheckPointIndex = 0;
-    [HideInInspector] public int checkPointPlayerWantsToSpawnIn = 0;
+//    private void OnSceneChanged(Scene previousScene, Scene newScene)
+//    {
+//        //SavePlayerData(playerData);
+//        // SaveCPData(checkpointData);
 
-    ////keeping track of the lastest checkpoint position for quick respawn
-    //private Vector3 _lastestcheckpointPosition = Vector3.zero;
-    //public Vector3 lastestcheckpointPosition
-    //{
-    //    get
-    //    {
-    //        if (_lastestcheckpointPosition == Vector3.zero)
-    //        {
-    //            int i = localCheckpointData.checkPointPositions.Count;
-    //            SerializableVector3 _pos = localCheckpointData.checkPointPositions[i];
-    //            _lastestcheckpointPosition = _pos.ToVector3();
-    //        }
-    //        return _lastestcheckpointPosition;
-    //    }
-
-    //    set
-    //    {
-    //        _lastestcheckpointPosition = value;
-    //    }
-    //}
-
-    /*this is where we finally make separation between the player data and checkpoint data, so that we can save them separately and load them separately as well.*/
-
-    /*we bake in the checkpoint data path for each scene, so that we can save and load them separately. further follow the strict rule that the path is determined by the scene index, and the index of the array points to the scene index, thus when using in a particular scene, we use its buildscene index to find the correct path, and must ensure it is consistent to avoid errors*/
-
-    /*since we cannot run application.persistantpath from data types, and only run it at start/awake so creating a simple private persistentpath variables, initiliazed in the awake function*/
-
-    //private string _applicationPersistentPath;
-
-    ////keeping all the required player data paths for different data store needs
-    //private static string[] checkpointDataPaths = new string[]
-    //{
-    //    // _applicationPersistentPath + "/checkpointData_scene0.json",
-    //    // _applicationPersistentPath + "/checkpointData_scene1.json",
-    //    // _applicationPersistentPath + "/checkpointData_scene2.json",
-    //    // _applicationPersistentPath + "/checkpointData_scene3.json"
-
-    //    //the above data is rewritten from the awake function since u cannot use a string inside a static variable
-    //};
-
-    //private save_manager _saveManager; //local reference to the save manager
-    //public save_manager saveManager
-    //{
-    //    get
-    //    {
-    //        if (_saveManager)
-    //            return _saveManager;
-    //        else
-    //        {
-    //            _saveManager = save_manager.Instance;
-    //            return _saveManager;
-    //        }
-    //    }
-
-    //}
-
-    //public void SaveCheckpointData(CheckpointData data)
-    //{
-    //    string path = checkpointDataPaths[SceneManager.GetActiveScene().buildIndex];
-    //    saveManager.SavePlayerData(data, path);
-    //}
-
-    // public CheckpointData LoadCheckpointData()
-    // {
-    //     string path = checkpointDataPath[SceneManager.GetActiveScene().buildIndex];
-
-    // }
-
-    //private CheckpointData _localCheckpointData;
-    //public CheckpointData localCheckpointData
-    //{
-    //    get
-    //    {
-    //        if (_localCheckpointData == null)
-    //        {
-    //            //load check point data
-    //            string _path = checkpointDataPaths[SceneManager.GetActiveScene().buildIndex];
-
-    //            _localCheckpointData = saveManager.LoadPlayerData<CheckpointData>(_path);
-    //        }
-    //        return _localCheckpointData;
-    //    }
-    //}
-    //#endregion
-    #endregion
-
-    #region Unity logic
-
-    private void OnEnable()
-    {
-        SceneManager.activeSceneChanged += OnSceneChanged; ;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.activeSceneChanged -= OnSceneChanged;
-    }
-
-    private void OnApplicationQuit()
-    {
-        //Saving player data and checkpoint data
-        // SavePlayerData(playerData);
-        // SaveCPData(checkpointData);
-
-        //Clearing Notification Manager list
-        NotificationManager.Instance.RemoveAll();
-    }
-
-    private void OnSceneChanged(Scene previousScene, Scene newScene)
-    {
-        //SavePlayerData(playerData);
-        // SaveCPData(checkpointData);
-
-        //Clearing Notification Manager list
-        NotificationManager.Instance.RemoveAll();
-    }
-    #endregion
+//        //Clearing Notification Manager list
+//        NotificationManager.Instance.RemoveAll();
+//    }
+//    #endregion
 
 }
 
